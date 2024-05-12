@@ -1,7 +1,8 @@
-import retry from 'retry';
-import isNetworkError from 'is-network-error';
+const retry = require('retry');
+const isNetworkError = require('@common.js/is-network-error').default;
 
-export class AbortError extends Error {
+Object.defineProperty(exports, "__esModule", { value: true });
+class AbortError extends Error {
 	constructor(message) {
 		super();
 
@@ -17,6 +18,7 @@ export class AbortError extends Error {
 		this.message = message;
 	}
 }
+exports.AbortError = AbortError;
 
 const decorateErrorWithCounts = (error, attemptNumber, options) => {
 	// Minus 1 from attemptNumber because the first attempt does not count as a retry
@@ -27,7 +29,7 @@ const decorateErrorWithCounts = (error, attemptNumber, options) => {
 	return error;
 };
 
-export default async function pRetry(input, options) {
+exports.default = async function pRetry(input, options) {
 	return new Promise((resolve, reject) => {
 		options = {
 			onFailedAttempt() {},
